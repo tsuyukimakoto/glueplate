@@ -1,0 +1,10 @@
+language: python
+python:
+  - "2.7"
+  - "3.4"
+  - "3.5"
+env:
+- GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings
+- BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
+- PYTHONPATH=.:..:$PYTHONPATH
+script: cd tests && python -m unittest
