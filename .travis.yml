@@ -7,6 +7,6 @@ python:
   - "3.5"
 env:
 - GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
-script: cd tests && PYTHONPATH=..:$PYTHONPATH coverage run test_doctest.py
+script: cd tests && PYTHONPATH=..:$PYTHONPATH coverage run --source=glueplate test_doctest.py
 after_success:
   - coveralls
