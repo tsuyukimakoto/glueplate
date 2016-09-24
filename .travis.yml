@@ -4,6 +4,5 @@ python:
   - "3.4"
   - "3.5"
 env:
-- GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings
-- BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
+- GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
 script: cd tests && PYTHONPATH=..:$PYTHONPATH python -m unittest test_doctest
