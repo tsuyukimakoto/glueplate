@@ -1,8 +1,8 @@
-import doctest
-import os
+#import doctest
+#import os
+import glueplate
+from nose.plugins.doctests import Doctest
 
 
-def load_tests(loader, tests, ignore):
-    import glueplate
-    tests.addTests(doctest.DocTestSuite(glueplate))
-    return tests
+gluedoctest = Doctest()
+gluedoctest.loadTestsFromModule(glueplate)
