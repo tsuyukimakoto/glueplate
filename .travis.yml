@@ -7,9 +7,10 @@ install:
   - pip install -r requirements-dev.txt
 env:
   global:
+    - PYTHONPATH=tests:$PYTHONPATH
     - GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings
     - BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
-    - PYTHONPATH=tests:$PYTHONPATH
+    - PARENTPACKAGE_SETTINGS_MODULE=parentpackage1.child_parentpackage1_settings
 script: coverage run setup.py test
 after_success:
   - bash <(curl -s https://codecov.io/bash)

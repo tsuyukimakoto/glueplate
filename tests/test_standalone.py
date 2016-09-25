@@ -2,6 +2,8 @@ import os
 import unittest
 from glueplate import config
 
+from imp import reload
+
 class TestGluePlateStandalone(unittest.TestCase):
 
     def test_load_basepackage_settings(self):
@@ -37,3 +39,23 @@ class TestGluePlateStandalone(unittest.TestCase):
         self.assertEqual(_list2[4], 5)
         self.assertEqual(_list2[5], 6)
         self.assertFalse('GLUE_PLATE_PLUS_AFTER_list2' in config.settings)
+
+    def test_assign(self):
+        config.settings.new_var = 'new variable'
+        self.assertTrue('new variable', config.settings.new_var)
+
+    def test_reassign(self):
+        self.assertTrue('spam' in config.settings.something.food)
+        self.assertTrue('egg' in config.settings.something.food)
+        config.settings.something.food = dict(ham='HAM')
+        self.assertEqual(config.settings.something.food.ham, 'HAM')
+        self.assertFalse('spam' in config.settings.something.food)
+        self.assertFalse('egg' in config.settings.something.food)
+        config.settings.to_be_override = 'from test'
+        self.assertEqual(config.settings.to_be_override, 'from test')
+
+        from othermodule import get_food
+        config_food_from_othermodule = get_food()
+        self.assertTrue('ham' in config_food_from_othermodule)
+        self.assertFalse('spam' in config_food_from_othermodule)
+        self.assertFalse('egg' in config_food_from_othermodule)
