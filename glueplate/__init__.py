@@ -31,6 +31,7 @@ class Glue(dict):
     ...   egg = 123,
     ...   lst = [1,2,3],
     ... )
+    >>> assert(1, 2)
     >>> assert(settings.spam == '123')
     >>> assert(settings.egg == 123)
     >>> assert(settings.lst == [1,2,3])
