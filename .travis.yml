@@ -1,12 +1,12 @@
 language: python
 install:
-  - pip install coveralls
+  - pip install nose coveralls
 python:
   - "2.7"
   - "3.4"
   - "3.5"
 env:
-- GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
-script: cd tests && PYTHONPATH=..:$PYTHONPATH coverage run --source=glueplate test_doctest.py
+- GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings NOSE_ALL_MODULES=1 NOSE_WITH_DOCTEST=1
+script: cd tests && PYTHONPATH=..:$PYTHONPATH coverage run --source=glueplate setup.py test
 after_success:
   - coveralls
