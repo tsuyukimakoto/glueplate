@@ -11,3 +11,5 @@ env:
     - BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
     - PYTHONPATH=tests:$PYTHONPATH
 script: coverage run setup.py test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
