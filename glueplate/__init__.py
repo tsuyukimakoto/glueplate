@@ -69,7 +69,3 @@ class Glue(dict):
 
     def update(self, opt):
         self = _update(self, opt)
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod()

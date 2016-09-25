@@ -3,6 +3,11 @@ python:
   - "2.7"
   - "3.4"
   - "3.5"
+install:
+  - pip install -r requirements-dev.txt
 env:
-- GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
-script: cd tests && PYTHONPATH=..:$PYTHONPATH python -m unittest test_doctest
+  global:
+    - GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings
+    - BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings
+    - PYTHONPATH=tests:$PYTHONPATH
+script: coverage run setup.py test
