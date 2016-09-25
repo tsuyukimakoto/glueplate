@@ -7,6 +7,4 @@ python:
   - "3.5"
 env:
 - GLUE_PLATE_BASE_MODULE=basepackage.basepackage_settings BASEPACKAGE_SETTINGS_MODULE=subpackage.basepackage_subpackage_settings NOSE_ALL_MODULES=1 NOSE_WITH_DOCTEST=1
-script: PYTHONPATH=./tests:$PYTHONPATH coverage run setup.py test
-after_success:
-  - coveralls
+script: PYTHONPATH=./tests:$PYTHONPATH nosetests
