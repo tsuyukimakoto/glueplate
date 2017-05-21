@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = "glueplate",
-    version = "1.0",
+    version = "1.0.1",
     packages = ['glueplate', 'glueplate.config']    ,
     author = "makoto tsuyuki",
     author_email = "mtsuyuki@gmail.com",
