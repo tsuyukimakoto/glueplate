@@ -1,8 +1,8 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
     name = "glueplate",
-    version = "1.0",
+    version = "1.0.1",
     packages = ['glueplate', 'glueplate.config']    ,
     author = "makoto tsuyuki",
     author_email = "mtsuyuki@gmail.com",
@@ -18,6 +18,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
