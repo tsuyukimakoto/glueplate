@@ -4,8 +4,11 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-  - "3.7"
-install:
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: trueinstall:
   - pip install -r requirements-dev.txt
 env:
   global:
