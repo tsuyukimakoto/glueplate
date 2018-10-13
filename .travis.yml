@@ -10,7 +10,7 @@ matrix:
       dist: xenial
       sudo: true
 install:
-  - pip install -r requirements-dev.txt
+  - pip install -r requirements/dev.txt
 env:
   global:
     - PYTHONPATH=tests:$PYTHONPATH
