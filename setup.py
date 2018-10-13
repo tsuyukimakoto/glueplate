@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = "glueplate",
-    version = "1.0.1",
+    version = "1.0.2",
     packages = ['glueplate', 'glueplate.config']    ,
     author = "makoto tsuyuki",
     author_email = "mtsuyuki@gmail.com",
@@ -36,6 +36,15 @@ config framework
 
 .. image:: https://codecov.io/gh/tsuyukimakoto/glueplate/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/tsuyukimakoto/glueplate
+
+.. image:: https://pyup.io/repos/github/tsuyukimakoto/glueplate/shield.svg
+    :target: https://pyup.io/repos/github/tsuyukimakoto/glueplate/
+
+.. image:: https://pyup.io/repos/github/tsuyukimakoto/glueplate/python-3-shield.svg
+    :target: https://pyup.io/repos/github/tsuyukimakoto/glueplate/
+
+.. image:: https://codebeat.co/badges/bb625f2e-572a-410f-9019-08006aac86cf
+    :target: https://codebeat.co/projects/github-com-tsuyukimakoto-glueplate-master
 
 What is Config framework?
 ------------------------------------------------------
