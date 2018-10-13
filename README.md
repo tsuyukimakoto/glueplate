@@ -2,7 +2,7 @@
 
 config framework
 
-[![Build Status](https://travis-ci.org/tsuyukimakoto/glueplate.svg?branch=master)](https://travis-ci.org/tsuyukimakoto/glueplate) [![codecov](https://codecov.io/gh/tsuyukimakoto/glueplate/branch/master/graph/badge.svg)](https://codecov.io/gh/tsuyukimakoto/glueplate)
+[![Build Status](https://travis-ci.org/tsuyukimakoto/glueplate.svg?branch=master)](https://travis-ci.org/tsuyukimakoto/glueplate) [![codecov](https://codecov.io/gh/tsuyukimakoto/glueplate/branch/master/graph/badge.svg)](https://codecov.io/gh/tsuyukimakoto/glueplate) [![Updates](https://pyup.io/repos/github/uncovertruth/django-lookup-extensions/shield.svg)](https://pyup.io/repos/github/uncovertruth/django-lookup-extensions/) [![Python 3](https://pyup.io/repos/github/uncovertruth/django-lookup-extensions/python-3-shield.svg)](https://pyup.io/repos/github/uncovertruth/django-lookup-extensions/)
 
 ## What is Config framework?
 
