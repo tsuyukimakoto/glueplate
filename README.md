@@ -2,7 +2,7 @@
 
 config framework
 
-[![Build Status](https://travis-ci.org/tsuyukimakoto/glueplate.svg?branch=master)](https://travis-ci.org/tsuyukimakoto/glueplate) [![codecov](https://codecov.io/gh/tsuyukimakoto/glueplate/branch/master/graph/badge.svg)](https://codecov.io/gh/tsuyukimakoto/glueplate) [![Updates](https://pyup.io/repos/github/tsuyukimakoto/glueplate/shield.svg)](https://pyup.io/repos/github/tsuyukimakoto/glueplate/) [![Python 3](https://pyup.io/repos/github/tsuyukimakoto/glueplate/python-3-shield.svg)](https://pyup.io/repos/github/tsuyukimakoto/glueplate/)
+[![Build Status](https://travis-ci.org/tsuyukimakoto/glueplate.svg?branch=master)](https://travis-ci.org/tsuyukimakoto/glueplate) [![codecov](https://codecov.io/gh/tsuyukimakoto/glueplate/branch/master/graph/badge.svg)](https://codecov.io/gh/tsuyukimakoto/glueplate) [![Updates](https://pyup.io/repos/github/tsuyukimakoto/glueplate/shield.svg)](https://pyup.io/repos/github/tsuyukimakoto/glueplate/) [![Python 3](https://pyup.io/repos/github/tsuyukimakoto/glueplate/python-3-shield.svg)](https://pyup.io/repos/github/tsuyukimakoto/glueplate/) [![codebeat badge](https://codebeat.co/badges/bb625f2e-572a-410f-9019-08006aac86cf)](https://codebeat.co/projects/github-com-tsuyukimakoto-glueplate-master)
 
 ## What is Config framework?
 
