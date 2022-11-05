@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name = "glueplate",
-    version = "1.1.0",
+    version = "1.2.0",
     packages = ['glueplate', 'glueplate.config']    ,
     author = "makoto tsuyuki",
     author_email = "mtsuyuki@gmail.com",
@@ -20,7 +20,6 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
-        'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'Topic :: Software Development :: Libraries :: Python Modules',
