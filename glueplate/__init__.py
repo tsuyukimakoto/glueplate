@@ -1,4 +1,7 @@
-import collections
+try:
+    from collections import Mapping
+except ImportError:
+    from collections.abc import Mapping
 
 import logging
 logger = logging.getLogger(__name__)
@@ -16,7 +19,7 @@ def _update(org, opt):
         elif k.startswith(GLUE_PLATE_PLUS_AFTER) and isinstance(v, list):
             _k = k[len(GLUE_PLATE_PLUS_AFTER):]
             org[_k] = org[_k] + v
-        elif isinstance(v, collections.Mapping):
+        elif isinstance(v, Mapping):
             r = _update(org.get(k, Glue()), v)
             org[k] = r
         else:
@@ -50,13 +53,13 @@ class Glue(dict):
 
     def __init__(self, *args, **kwargs):
         for d in args:
-            if isinstance(d, collections.Mapping):
+            if isinstance(d, Mapping):
                 self.update(d)
         for key, value in kwargs.items():
             self[key] = value
 
     def __setattr__(self, key, value):
-        if isinstance(value, collections.Mapping):
+        if isinstance(value, Mapping):
             self[key] = Glue(value)
         else:
             self[key] = value
