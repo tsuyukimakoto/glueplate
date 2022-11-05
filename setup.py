@@ -10,22 +10,16 @@ setup(
     license = "MIT",
     keywords = "settings config framework",
     url = "https://github.com/tsuyukimakoto/glueplate",
-    test_suite = 'nose.collector',
+    test_suite = 'pytest',
     classifiers = [
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
-<<<<<<< Updated upstream
-        'Programming Language :: Python :: Implementation :: PyPy',
-=======
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
->>>>>>> Stashed changes
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'Topic :: Software Development :: Libraries :: Python Modules',
@@ -35,21 +29,6 @@ glueplate
 ========================================================
 
 config framework
-
-.. image:: https://travis-ci.org/tsuyukimakoto/glueplate.svg?branch=master
-    :target: https://travis-ci.org/tsuyukimakoto/glueplate
-
-.. image:: https://codecov.io/gh/tsuyukimakoto/glueplate/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/tsuyukimakoto/glueplate
-
-.. image:: https://pyup.io/repos/github/tsuyukimakoto/glueplate/shield.svg
-    :target: https://pyup.io/repos/github/tsuyukimakoto/glueplate/
-
-.. image:: https://pyup.io/repos/github/tsuyukimakoto/glueplate/python-3-shield.svg
-    :target: https://pyup.io/repos/github/tsuyukimakoto/glueplate/
-
-.. image:: https://codebeat.co/badges/bb625f2e-572a-410f-9019-08006aac86cf
-    :target: https://codebeat.co/projects/github-com-tsuyukimakoto-glueplate-master
 
 What is Config framework?
 ------------------------------------------------------
