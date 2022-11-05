@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 ENVIRONMENT_VARIABLE = 'GLUE_PLATE_MODULE'
 
+
 def _merge_parents(settings):
     if GLUE_PLATE_PARENT_MODULES in settings:
         for parent_module_name in settings.GLUE_PLATE_PARENT_MODULES:
@@ -22,6 +23,7 @@ def _merge_parents(settings):
             parent_settings.update(settings)
             settings = parent_settings
     return settings
+
 
 if __name__ == 'glueplate.config':
     if not os.environ.get('GLUE_PLATE_BASE_MODULE', None):

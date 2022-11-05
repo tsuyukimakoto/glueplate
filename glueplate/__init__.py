@@ -11,6 +11,7 @@ GLUE_PLATE_PLUS_BEFORE = 'GLUE_PLATE_PLUS_BEFORE_'
 GLUE_PLATE_PLUS_AFTER = 'GLUE_PLATE_PLUS_AFTER_'
 GLUE_PLATE_PARENT_MODULES = 'GLUE_PLATE_PARENT_MODULES'
 
+
 def _update(org, opt):
     for k, v in opt.items():
         if k.startswith(GLUE_PLATE_PLUS_BEFORE) and isinstance(v, list):
@@ -67,7 +68,7 @@ class Glue(dict):
     def __getattr__(self, key):
         try:
             return self[key]
-        except:
+        except AttributeError:
             object.__getattribute__(self, key)
 
     def update(self, opt):
