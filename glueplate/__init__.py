@@ -1,4 +1,7 @@
-import collections
+try:
+    from collections import Mapping
+except ImportError:
+    from collections.abc import Mapping
 
 import logging
 logger = logging.getLogger(__name__)
@@ -8,6 +11,7 @@ GLUE_PLATE_PLUS_BEFORE = 'GLUE_PLATE_PLUS_BEFORE_'
 GLUE_PLATE_PLUS_AFTER = 'GLUE_PLATE_PLUS_AFTER_'
 GLUE_PLATE_PARENT_MODULES = 'GLUE_PLATE_PARENT_MODULES'
 
+
 def _update(org, opt):
     for k, v in opt.items():
         if k.startswith(GLUE_PLATE_PLUS_BEFORE) and isinstance(v, list):
@@ -16,7 +20,7 @@ def _update(org, opt):
         elif k.startswith(GLUE_PLATE_PLUS_AFTER) and isinstance(v, list):
             _k = k[len(GLUE_PLATE_PLUS_AFTER):]
             org[_k] = org[_k] + v
-        elif isinstance(v, collections.Mapping):
+        elif isinstance(v, Mapping):
             r = _update(org.get(k, Glue()), v)
             org[k] = r
         else:
@@ -50,13 +54,13 @@ class Glue(dict):
 
     def __init__(self, *args, **kwargs):
         for d in args:
-            if isinstance(d, collections.Mapping):
+            if isinstance(d, Mapping):
                 self.update(d)
         for key, value in kwargs.items():
             self[key] = value
 
     def __setattr__(self, key, value):
-        if isinstance(value, collections.Mapping):
+        if isinstance(value, Mapping):
             self[key] = Glue(value)
         else:
             self[key] = value
@@ -64,7 +68,7 @@ class Glue(dict):
     def __getattr__(self, key):
         try:
             return self[key]
-        except:
+        except AttributeError:
             object.__getattribute__(self, key)
 
     def update(self, opt):

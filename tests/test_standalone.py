@@ -2,8 +2,6 @@ import os
 import unittest
 from glueplate import config
 
-from imp import reload
-
 class TestGluePlateStandalone(unittest.TestCase):
 
     def test_load_basepackage_settings(self):
