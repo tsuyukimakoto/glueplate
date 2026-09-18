@@ -1,5 +1,0 @@
-requirements:
-  - requirements/dev.txt
-schedule: "every week on saturday"
-assignees:
-  - tsuyukimakoto

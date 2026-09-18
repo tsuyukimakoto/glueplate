@@ -1,115 +1,101 @@
 # glueplate
 
-config framework
+Glueplate provides composable settings for Python frameworks and libraries. Settings are dictionaries that support attribute access, recursive merging, list extension, and inheritance from other Glueplate configurations.
 
-[![Build Status](https://travis-ci.org/tsuyukimakoto/glueplate.svg?branch=master)](https://travis-ci.org/tsuyukimakoto/glueplate) [![codecov](https://codecov.io/gh/tsuyukimakoto/glueplate/branch/master/graph/badge.svg)](https://codecov.io/gh/tsuyukimakoto/glueplate) [![Updates](https://pyup.io/repos/github/tsuyukimakoto/glueplate/shield.svg)](https://pyup.io/repos/github/tsuyukimakoto/glueplate/) [![Python 3](https://pyup.io/repos/github/tsuyukimakoto/glueplate/python-3-shield.svg)](https://pyup.io/repos/github/tsuyukimakoto/glueplate/) [![codebeat badge](https://codebeat.co/badges/bb625f2e-572a-410f-9019-08006aac86cf)](https://codebeat.co/projects/github-com-tsuyukimakoto-glueplate-master)
+## Installation
 
-## What is Config framework?
-
-Your framework or library might need default settings and you want your user to change them.
-
-Many developer wrote this kind of code, and you are going to. GluePlate is it!
-
-## Features
-
-### Easy to write - Merge
-
-You and your user write easiry.
-
-Just import Glue as _ and write like nested dict.
-
+```console
+python -m pip install glueplate
 ```
-from glueplate import Glue as _
 
+Glueplate requires Python 3.11 or later.
 
-settings = _(
-    GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY = 'BASEPACKAGE_SETTINGS_MODULE',
-    from_base = 'comming from base',
-    to_be_override = 'I am base.',
+## Define base settings
+
+Create a module that exports a `settings` value. `GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY` names the environment variable that points to the user's settings module.
+
+```python
+from glueplate import Glue
+
+settings = Glue(
+    GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY="MY_APP_SETTINGS_MODULE",
+    debug=False,
+    paths=["base"],
+    database={"host": "localhost", "port": 5432},
 )
 ```
 
-glueplate import variable named `settings` from os.environ['GLUE_PLATE_BASE_MODULE'], this is a base settings.
+Set `GLUE_PLATE_BASE_MODULE` to that module and the configured environment variable to the user's module.
 
-Then glueplate looks settings.GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY and import variable named `settings` from os.environ[settings.GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY], this is a user customized settings. Customized settings needs only user needs override, or addition.
-
+```console
+export GLUE_PLATE_BASE_MODULE=my_app.default_settings
+export MY_APP_SETTINGS_MODULE=my_project.settings
 ```
-from glueplate import Glue as _
 
+The user's module only needs to contain overrides.
 
-settings = _(
-    from_sub='comming from sub',
-    to_be_override = 'I am sub.',
+```python
+from glueplate import Glue
+
+settings = Glue(
+    debug=True,
+    database={"host": "database.example.com"},
 )
 ```
 
-They are merged and easy to use.
+Load the merged settings through `glueplate.config`.
 
-```
+```python
 from glueplate import config
 
-assert('I am sub' == config.settings.to_be_override)
-assert('comming from base' == config.settings.from_base)
-assert('comming from sub' == config.settings.from_sub)
+assert config.settings.debug is True
+assert config.settings.database.host == "database.example.com"
+assert config.settings.database.port == 5432
 ```
 
-### Append to list
+## Extend lists
 
-You may not want to override by you user, just add user's additional data.
+Use `GLUE_PLATE_PLUS_BEFORE_` or `GLUE_PLATE_PLUS_AFTER_` followed by the target setting name.
 
-glueplate provide special keyword prefix to append original settings variable.
+```python
+from glueplate import Glue
 
-- GLUE_PLATE_PLUS_BEFORE_
+settings = Glue(
+    GLUE_PLATE_PLUS_BEFORE_paths=["project-first"],
+    GLUE_PLATE_PLUS_AFTER_paths=["project-last"],
+)
+```
 
-    User can append list before.
+The merged value is `['project-first', 'base', 'project-last']`.
 
-    
-        # base
-        settings = _(
-            list1 = [1,2,3],
-        )
+## Inherit settings
 
-        # user customized
-        settings = _(
-            GLUE_PLATE_PLUS_BEFORE_list1 = [5,4]
-        )
+A base settings module can include other Glueplate settings modules.
 
-        # config.settings.list1 == [5, 4, 1, 2, 3]
+```python
+from glueplate import Glue
 
-- GLUE_PLATE_PLUS_AFTER_
+settings = Glue(
+    GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY="MY_APP_SETTINGS_MODULE",
+    GLUE_PLATE_PARENT_MODULES=[
+        "another_library.default_settings",
+    ],
+)
+```
 
-    Same as GLUE_PLATE_PLUS_BEFORE_ but append to backward.
+## Development
 
-        # base
-        settings = _(
-            list1 = [1,2,3],
-        )
+The development environment is managed with [uv](https://docs.astral.sh/uv/).
 
-        # user customized
-        settings = _(
-            GLUE_PLATE_PLUS_AFTER_list1 = [5,4]
-        )
+```console
+uv sync --locked
+uv run pytest
+uv run ruff check .
+uv run pyrefly check
+uv build
+uv run twine check dist/*
+```
 
-        # config.settings.list1 == [1, 2, 3, 5, 4]
+## License
 
-### Inherit other glueplate
-
-You might use library using glueplate. Environment variable `GLUE_PLATE_BASE_MODULE` is only one on your process.
-
-Your base settings can indecate library's gluplate settings module.
-
-- GLUE_PLATE_PARENT_MODULES
-
-    Specify library's gluplate settings module names as list.
-
-        from glueplate import Glue as _
-
-
-        settings = _(
-            GLUE_PLATE_PARENT_MODULES=[
-                'parentpackage1.parentpackage1_settings',
-                'parentpackage2.parentpackage2_settings'
-            ]
-        )
-
-
+Glueplate is distributed under the MIT License.

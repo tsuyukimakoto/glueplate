@@ -1,59 +1,84 @@
-import os
-import unittest
-from glueplate import config
+import pytest
 
-class TestGluePlateStandalone(unittest.TestCase):
+from glueplate import Glue, config
 
-    def test_load_basepackage_settings(self):
-        self.assertEqual(config.settings.GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY, 'BASEPACKAGE_SETTINGS_MODULE')
-        self.assertEqual(config.settings.from_base, 'comming from base')
-        self.assertEqual(config.settings.from_sub, 'comming from sub')
 
-    def test_override_sub_settings(self):
-        self.assertEqual(config.settings.to_be_override, 'I am sub.')
+def test_loads_and_overrides_settings() -> None:
+    assert config.settings.GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY == "BASEPACKAGE_SETTINGS_MODULE"
+    assert config.settings.from_base == "comming from base"
+    assert config.settings.from_sub == "comming from sub"
+    assert config.settings.to_be_override == "I am sub."
 
-    def test_merge_recursive(self):
-        self.assertEqual(config.settings.something.good, 'better')
-        self.assertEqual(config.settings.something.bad, 'worse')
-        self.assertEqual(config.settings.something.food.spam, 'spam')
-        self.assertEqual(config.settings.something.food.egg, 'egg')
 
-    def test_append_before(self):
-        _list1 = config.settings.list1
-        self.assertEqual(_list1[0], -3)
-        self.assertEqual(_list1[1], -2)
-        self.assertEqual(_list1[2], -1)
-        self.assertEqual(_list1[3], 1)
-        self.assertEqual(_list1[4], 2)
-        self.assertEqual(_list1[5], 3)
-        self.assertFalse('GLUE_PLATE_PLUS_BEFORE_list1' in config.settings)
+def test_merges_nested_settings() -> None:
+    assert config.settings.something.good == "better"
+    assert config.settings.something.bad == "worse"
+    assert config.settings.something.food.spam == "spam"
+    assert config.settings.something.food.egg == "egg"
 
-    def test_append_after(self):
-        _list2 = config.settings.list2
-        self.assertEqual(_list2[0], 1)
-        self.assertEqual(_list2[1], 2)
-        self.assertEqual(_list2[2], 3)
-        self.assertEqual(_list2[3], 4)
-        self.assertEqual(_list2[4], 5)
-        self.assertEqual(_list2[5], 6)
-        self.assertFalse('GLUE_PLATE_PLUS_AFTER_list2' in config.settings)
 
-    def test_assign(self):
-        config.settings.new_var = 'new variable'
-        self.assertTrue('new variable', config.settings.new_var)
+def test_appends_to_lists() -> None:
+    assert config.settings.list1 == [-3, -2, -1, 1, 2, 3]
+    assert config.settings.list2 == [1, 2, 3, 4, 5, 6]
+    assert "GLUE_PLATE_PLUS_BEFORE_list1" not in config.settings
+    assert "GLUE_PLATE_PLUS_AFTER_list2" not in config.settings
 
-    def test_reassign(self):
-        self.assertTrue('spam' in config.settings.something.food)
-        self.assertTrue('egg' in config.settings.something.food)
-        config.settings.something.food = dict(ham='HAM')
-        self.assertEqual(config.settings.something.food.ham, 'HAM')
-        self.assertFalse('spam' in config.settings.something.food)
-        self.assertFalse('egg' in config.settings.something.food)
-        config.settings.to_be_override = 'from test'
-        self.assertEqual(config.settings.to_be_override, 'from test')
 
-        from othermodule import get_food
-        config_food_from_othermodule = get_food()
-        self.assertTrue('ham' in config_food_from_othermodule)
-        self.assertFalse('spam' in config_food_from_othermodule)
-        self.assertFalse('egg' in config_food_from_othermodule)
+def test_glue_supports_attribute_access_and_assignment() -> None:
+    settings = Glue(spam="spam", nested={"answer": 42})
+
+    settings.ham = "ham"
+
+    assert settings.spam == "spam"
+    assert settings.ham == "ham"
+    assert settings.nested.answer == 42
+
+
+def test_missing_attribute_uses_normal_attribute_semantics() -> None:
+    settings = Glue()
+
+    assert getattr(settings, "missing", "default") == "default"
+    assert not hasattr(settings, "missing")
+    with pytest.raises(AttributeError, match="missing"):
+        _ = settings.missing
+
+
+def test_update_merges_nested_mappings() -> None:
+    settings = Glue({"food": {"spam": "spam"}})
+
+    settings.update({"food": {"egg": "egg"}})
+
+    assert settings.food == {"spam": "spam", "egg": "egg"}
+
+
+def test_list_extension_requires_an_existing_list() -> None:
+    settings = Glue(value="not a list")
+
+    with pytest.raises(TypeError, match="must be a list"):
+        settings.update({"GLUE_PLATE_PLUS_AFTER_value": [1]})
+
+
+def test_load_settings_requires_base_module() -> None:
+    with pytest.raises(ValueError, match="GLUE_PLATE_BASE_MODULE is not set"):
+        config.load_settings({})
+
+
+def test_load_settings_requires_environment_variable_key() -> None:
+    environ = {"GLUE_PLATE_BASE_MODULE": "granpackage.granpackage_settings"}
+
+    with pytest.raises(ValueError, match="must define GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY"):
+        config.load_settings(environ)
+
+
+def test_load_settings_requires_child_module() -> None:
+    environ = {"GLUE_PLATE_BASE_MODULE": "basepackage.basepackage_settings"}
+
+    with pytest.raises(ValueError, match="BASEPACKAGE_SETTINGS_MODULE is not set"):
+        config.load_settings(environ)
+
+
+def test_load_settings_requires_mapping() -> None:
+    environ = {"GLUE_PLATE_BASE_MODULE": "othermodule"}
+
+    with pytest.raises(TypeError, match="must define a mapping named 'settings'"):
+        config.load_settings(environ)
