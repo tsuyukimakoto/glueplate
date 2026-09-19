@@ -3,14 +3,14 @@
 from collections.abc import Iterable, Mapping
 from typing import Any
 
-GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY = "GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY"
-GLUE_PLATE_PLUS_BEFORE = "GLUE_PLATE_PLUS_BEFORE_"
-GLUE_PLATE_PLUS_AFTER = "GLUE_PLATE_PLUS_AFTER_"
-GLUE_PLATE_PARENT_MODULES = "GLUE_PLATE_PARENT_MODULES"
+GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY = 'GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY'
+GLUE_PLATE_PLUS_BEFORE = 'GLUE_PLATE_PLUS_BEFORE_'
+GLUE_PLATE_PLUS_AFTER = 'GLUE_PLATE_PLUS_AFTER_'
+GLUE_PLATE_PARENT_MODULES = 'GLUE_PLATE_PARENT_MODULES'
 
 
 def _updated_list(
-    original: "Glue",
+    original: 'Glue',
     key: str,
     values: list[Any],
     *,
@@ -21,12 +21,12 @@ def _updated_list(
     )
     current = original[target_key]
     if not isinstance(current, list):
-        raise TypeError(f"{target_key!r} must be a list")
+        raise TypeError(f'{target_key!r} must be a list')
     return values + current if before else current + values
 
 
 def _update(
-    original: "Glue",
+    original: 'Glue',
     updates: Mapping[str, Any],
 ) -> None:
     for key, value in updates.items():

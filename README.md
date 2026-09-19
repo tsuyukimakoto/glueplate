@@ -18,10 +18,10 @@ Create a module that exports a `settings` value. `GLUE_PLATE_ENVIRONMENT_VARIABL
 from glueplate import Glue
 
 settings = Glue(
-    GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY="MY_APP_SETTINGS_MODULE",
+    GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY='MY_APP_SETTINGS_MODULE',
     debug=False,
-    paths=["base"],
-    database={"host": "localhost", "port": 5432},
+    paths=['base'],
+    database={'host': 'localhost', 'port': 5432},
 )
 ```
 
@@ -39,7 +39,7 @@ from glueplate import Glue
 
 settings = Glue(
     debug=True,
-    database={"host": "database.example.com"},
+    database={'host': 'database.example.com'},
 )
 ```
 
@@ -49,7 +49,7 @@ Load the merged settings through `glueplate.config`.
 from glueplate import config
 
 assert config.settings.debug is True
-assert config.settings.database.host == "database.example.com"
+assert config.settings.database.host == 'database.example.com'
 assert config.settings.database.port == 5432
 ```
 
@@ -61,8 +61,8 @@ Use `GLUE_PLATE_PLUS_BEFORE_` or `GLUE_PLATE_PLUS_AFTER_` followed by the target
 from glueplate import Glue
 
 settings = Glue(
-    GLUE_PLATE_PLUS_BEFORE_paths=["project-first"],
-    GLUE_PLATE_PLUS_AFTER_paths=["project-last"],
+    GLUE_PLATE_PLUS_BEFORE_paths=['project-first'],
+    GLUE_PLATE_PLUS_AFTER_paths=['project-last'],
 )
 ```
 
@@ -76,9 +76,9 @@ A base settings module can include other Glueplate settings modules.
 from glueplate import Glue
 
 settings = Glue(
-    GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY="MY_APP_SETTINGS_MODULE",
+    GLUE_PLATE_ENVIRONMENT_VARIABLE_KEY='MY_APP_SETTINGS_MODULE',
     GLUE_PLATE_PARENT_MODULES=[
-        "another_library.default_settings",
+        'another_library.default_settings',
     ],
 )
 ```
