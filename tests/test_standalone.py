@@ -80,5 +80,5 @@ def test_load_settings_requires_child_module() -> None:
 def test_load_settings_requires_mapping() -> None:
     environ = {'GLUE_PLATE_BASE_MODULE': 'othermodule'}
 
-    with pytest.raises(TypeError, match="must define a mapping named 'settings'"):
+    with pytest.raises(TypeError, match='must define a mapping named `settings`'):
         config.load_settings(environ)

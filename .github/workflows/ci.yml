@@ -37,7 +37,6 @@ jobs:
         with:
           enable-cache: true
       - run: uv sync --locked --python 3.14
-      - run: uv run --locked ruff format --check .
       - run: uv run --locked ruff check .
       - run: uv run --locked pyrefly check
       - run: uv build

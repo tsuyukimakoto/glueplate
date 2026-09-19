@@ -16,7 +16,7 @@ def _module_settings(module_name: str) -> Glue:
     module = import_module(module_name)
     module_settings: Any = getattr(module, 'settings', None)
     if not isinstance(module_settings, Mapping):
-        raise TypeError(f"{module_name!r} must define a mapping named 'settings'")
+        raise TypeError(f'{module_name!r} must define a mapping named `settings`')
     return Glue(module_settings)
 
 
